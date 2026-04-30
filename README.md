@@ -17,14 +17,6 @@ SSHGuard/
 └── logs/
 ```
 
-## Team Tasks
-
-See:
-
-```text
-docs/team_tasks.md
-```
-
 ## Future Usage
 
 ```bash
