@@ -1,20 +1,28 @@
 #!/usr/bin/env bash
 
-# Member 1 task: implement project logging.
-#
-# Required:
-# - Create a function named log_event.
-# - Save events inside logs/history.log.
-# - Use this format:
-#   YYYY-MM-DD-HH-MM-SS : USER : TYPE : MESSAGE
-# - Handle errors if the log directory does not exist.
-#
-# Example function to complete:
-#
-# log_event() {
-#     local type="$1"
-#     local message="$2"
-#     # TODO: create timestamp
-#     # TODO: get current user
-#     # TODO: write formatted message to history log
-# }
+# Logging functions for SSHGuard.
+
+log_event() {
+    local type="$1"
+    local message="$2"
+    local log_file="${HISTORY_LOG:-logs/history.log}"
+    local log_directory
+    local timestamp
+    local user_name
+
+    log_directory="$(dirname "$log_file")"
+    timestamp="$(date '+%Y-%m-%d-%H-%M-%S')"
+    user_name="${USER:-$(whoami 2>/dev/null || printf 'unknown')}"
+
+    if [[ ! -d "$log_directory" ]]; then
+        mkdir -p "$log_directory" || {
+            print_error "Cannot create log directory: $log_directory"
+            return 1
+        }
+    fi
+
+    printf "%s : %s : %s : %s\n" "$timestamp" "$user_name" "$type" "$message" >> "$log_file" || {
+        print_error "Cannot write to log file: $log_file"
+        return 1
+    }
+}
