@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 readonly DEFAULT_LOG_FILE="/var/log/auth.log"
 readonly TEMP_IPS_FILE="/tmp/securewatch_ips.tmp"
