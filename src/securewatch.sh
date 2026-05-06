@@ -4,9 +4,10 @@
 
 SCRIPT_DIR="$(dirname "$0")"
 
-# Charger les logs depuis les variables par defaut requises
+# Charger les logs depuis les variables par defaut requises.
 export HISTORY_LOG="${HISTORY_LOG:-/var/log/securewatch/history.log}"
 export BLOCKED_IPS_LOG="${BLOCKED_IPS_LOG:-/var/log/securewatch/blacklist.txt}"
+
 
 # Load config.conf
 source "${SCRIPT_DIR}/config/config.conf"
