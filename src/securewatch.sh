@@ -38,13 +38,13 @@ run_detection() {
 
 run_blocking() {
     local suspects_count
-    
+
     run_detection || return $?
-    
+
     if [[ ! -f "$TEMP_SUSPECTS_FILE" ]]; then
        return 0
     fi
-    
+
     suspects_count=$(count_suspicious_ips 2>/dev/null || echo "0")
     if [[ "$suspects_count" -gt 0 ]]; then
         print_info "$suspects_count IP suspectes trouvées. Blocage automatique..."
@@ -125,7 +125,7 @@ main() {
             run_detection
             ret=$?
         fi
-        
+
         if [[ $ret -ge 100 && $ret -le 103 ]]; then
             echo ""
             show_help

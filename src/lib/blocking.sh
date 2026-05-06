@@ -5,7 +5,7 @@
 block_ip() {
     local ip="$1"
     local blocked_log="${BLOCKED_IPS_LOG:-/var/log/securewatch/blacklist.txt}"
-    
+
     # Valider l'IP
     if ! is_valid_ip "$ip"; then
         print_warning "IP invalide ignoree: $ip"
@@ -35,11 +35,11 @@ block_ip() {
     if [[ ! -d "$log_directory" ]]; then
         mkdir -p "$log_directory" 2>/dev/null
     fi
-    
+
     if ! grep -q "^$ip$" "$blocked_log" 2>/dev/null; then
         echo "$ip" >> "$blocked_log"
     fi
-    
+
     return 0
 }
 
@@ -53,7 +53,7 @@ block_suspicious_ips() {
     fi
 
     print_info "Debut du blocage des IP suspectes..."
-    
+
     while IFS=':' read -r ip count; do
         if [[ -n "$ip" ]]; then
             block_ip "$ip"
@@ -65,7 +65,7 @@ block_suspicious_ips() {
 restore_blocked_ips() {
     local blocked_log="${BLOCKED_IPS_LOG:-/var/log/securewatch/blacklist.txt}"
     local ip
-    
+
     # Verifier les permissions root
     require_root || return 103
 
@@ -74,7 +74,7 @@ restore_blocked_ips() {
     fi
 
     print_info "Restauration des IP bloquees..."
-    
+
     while IFS= read -r ip; do
         if [[ -n "$ip" && "$ip" != "" ]]; then
             # Debloquer avec iptables
@@ -86,7 +86,7 @@ restore_blocked_ips() {
             fi
         fi
     done < "$blocked_log"
-    
+
     # Nettoyer le fichier blacklist
     > "$blocked_log"
     print_success "Toutes les IP ont ete restaurees et la blacklist a ete videe."
