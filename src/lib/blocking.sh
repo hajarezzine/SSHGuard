@@ -93,6 +93,7 @@ restore_blocked_ips() {
     log_event "INFOS" "Toutes les IP restaurees, blacklist videe"
 }
 
+
 # Displays currently blocked IPs
 show_blocked_ips() {
     local blocked_log="${BLOCKED_IPS_LOG:-/var/log/securewatch/blacklist.txt}"
